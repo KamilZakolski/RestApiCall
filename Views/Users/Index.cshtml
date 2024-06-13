@@ -1,0 +1,40 @@
+﻿@model IEnumerable<RestApiExample.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+    var nameSortParam = String.IsNullOrEmpty(ViewBag.CurrentSort) ? "name_desc" : "";
+    var emailSortParam = ViewBag.CurrentSort == "email" ? "email_desc" : "email";
+}
+
+<h1>Users</h1>
+
+<form method="get">
+    <p>
+        Search: <input type="text" name="searchString" value="@ViewBag.CurrentFilter" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@nameSortParam">Name</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@emailSortParam">Email</a>
+            </th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Phone</td>
+            </tr>
+        }
+    </tbody>
+</table>
